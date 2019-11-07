@@ -10,6 +10,9 @@ import { VersionSelComponent } from './odvselector/version-sel/version-sel.compo
 
 @NgModule({
   declarations: [ODVSelectorComponent, YearSelComponent, MonthSelComponent, DaySelComponent, VersionSelComponent],
+  exports: [
+    ODVSelectorComponent
+  ],
   imports: [
     CommonModule
   ]

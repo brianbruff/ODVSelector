@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-year-sel',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./year-sel.component.css']
 })
 export class YearSelComponent implements OnInit {
+  @Input() years$: Observable<number[]>;
 
   constructor() { }
 

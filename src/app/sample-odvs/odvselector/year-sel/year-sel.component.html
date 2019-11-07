@@ -1,1 +1,4 @@
-<p>year-sel works!</p>
+
+<ul *ngIf="years$ | async as years">
+  <li *ngFor="let year of years">{{year}}</li>
+</ul>
