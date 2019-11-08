@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {CurvesService} from '../../curves/curves.service';
-import {map, tap} from 'rxjs/operators';
+import {distinct, map, tap} from 'rxjs/operators';
 
 
 
@@ -9,13 +9,13 @@ import {map, tap} from 'rxjs/operators';
 })
 export class OnDateSelectorServiceService {
 
+
   vm$ = this.curveService.ondates$.pipe(
-     tap(console.log),
     map(ondates => {
-      console.log(`ondates: typeof:${typeof(ondates)}, value: ${ondates}`);
-      ondates.map(ods => {
-        console.log(`ods: typeof:${typeof(ods)}, value: ${ods}`);
-        });
+      const years = ondates.map(ods => {
+        return ods.year();
+      });
+      return [...new Set(years)];
     })
   );
 

@@ -8,7 +8,7 @@ const moment = _moment;
 @Component({
   selector: 'app-odvselector',
   templateUrl: './odvselector.component.html',
-  styleUrls: ['./odvselector.component.css']
+  styleUrls: ['./odvselector.component.scss']
 })
 export class ODVSelectorComponent {
 
