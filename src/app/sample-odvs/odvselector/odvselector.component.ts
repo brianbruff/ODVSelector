@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import * as _moment from 'moment';
 import {Observable, of} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
-import {OnDateSelectorServiceService} from './on-date-selector-service.service';
+import {OnDateSelectorService} from './on-date-selector.service';
 const moment = _moment;
 
 @Component({
@@ -27,7 +27,7 @@ export class ODVSelectorComponent {
   //   })
   // );
 
-  constructor(private onDateSelectorService: OnDateSelectorServiceService) {
+  constructor(private onDateSelectorService: OnDateSelectorService) {
   }
 
 

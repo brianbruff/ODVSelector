@@ -1,13 +1,14 @@
-<ng-container *ngIf="vm$ | async as vm">
+<ng-container *ngIf="vm$ | async as vm"  >
 
-  <div class="summary" *ngFor="let v of vm">
-    <p>test</p>
-    <p>{{v}}</p>
-  </div>
+<!--  <div class="years">-->
+<!--    <div class="summary" *ngFor="let v of vm.years">-->
+<!--      <p>{{v}}</p>-->
+<!--    </div>-->
+<!--  </div>-->
 
 
-  <app-year-sel></app-year-sel>
-  <app-month-sel></app-month-sel>
-  <app-day-sel></app-day-sel>
-  <app-version-sel></app-version-sel>
+  <app-year-sel [years]="vm.years"></app-year-sel>
+  <app-month-sel [months]="vm.months"></app-month-sel>
+  <app-day-sel [days]="vm.days"></app-day-sel>
+  <app-version-sel [versions]="vm.versions" ></app-version-sel>
 </ng-container>

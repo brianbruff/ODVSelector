@@ -1,17 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
+import {OnDateSelectorService} from '../on-date-selector.service';
 
 @Component({
   selector: 'app-year-sel',
   templateUrl: './year-sel.component.html',
-  styleUrls: ['./year-sel.component.css']
+  styleUrls: ['./year-sel.component.scss']
 })
-export class YearSelComponent implements OnInit {
-  @Input() years$: Observable<number[]>;
+export class YearSelComponent {
+  @Input() years: Observable<Array<number>>;
 
-  constructor() { }
+  constructor(private selectorService: OnDateSelectorService) { }
 
-  ngOnInit() {
+  selectYear(year: number) {
+    this.selectorService.selectYear(year);
   }
-
 }

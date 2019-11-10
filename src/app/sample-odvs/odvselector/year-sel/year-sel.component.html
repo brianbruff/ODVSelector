@@ -1,4 +1,5 @@
-
-<ul *ngIf="years$ | async as years">
-  <li *ngFor="let year of years">{{year}}</li>
-</ul>
+<div class="years">
+  <div class="summary" *ngFor="let v of years" (click)="selectYear(v)">
+    {{v}}
+  </div>
+</div>
