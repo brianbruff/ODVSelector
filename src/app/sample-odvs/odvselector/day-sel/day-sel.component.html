@@ -1,5 +1,5 @@
 <div class="days">
-  <div *ngFor="let v of days">
+  <div *ngFor="let v of days" (click)="selectDay(v)">
     {{v}}
   </div>
 </div>

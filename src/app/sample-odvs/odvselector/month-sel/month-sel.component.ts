@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
+import {OnDateSelectorService} from '../on-date-selector.service';
 
 @Component({
   selector: 'app-month-sel',
@@ -10,9 +11,12 @@ export class MonthSelComponent implements OnInit {
 
   @Input() months: Observable<Array<number>>;
 
-  constructor() { }
+  constructor(private selectorService: OnDateSelectorService) { }
 
   ngOnInit() {
   }
 
+  selectMonth(month: number) {
+    this.selectorService.selectMonth(month);
+  }
 }

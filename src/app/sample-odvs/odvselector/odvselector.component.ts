@@ -17,6 +17,6 @@ export class ODVSelectorComponent {
   constructor(private onDateSelectorService: OnDateSelectorService) {
   }
 
-  //todo: service per component
+
 
 }

@@ -8,10 +8,4 @@ import {CurvesService} from './curves/curves.service';
 })
 export class AppComponent {
   title = 'ODVersionSelector';
-  ondates = this.curvesService.ondates$;
-
-  constructor(private curvesService: CurvesService) {
-
-  }
-
 }

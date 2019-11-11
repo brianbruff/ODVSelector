@@ -1,5 +1,5 @@
 <div class="months">
-  <div  *ngFor="let v of months">
-    <p>{{v}}</p>
+  <div  *ngFor="let v of months" (click)="selectMonth(v)">
+    {{v+1}}
   </div>
 </div>
