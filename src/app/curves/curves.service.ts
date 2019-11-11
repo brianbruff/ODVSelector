@@ -10,6 +10,7 @@ export class CurvesService {
 
   private  ondatesSubject = new BehaviorSubject([
     moment('2000-01-01 01:01:01', 'YYYY-MM-DD HH:mm:ss'),
+    moment('2000-01-03 01:01:01', 'YYYY-MM-DD HH:mm:ss'),
     moment('2001-02-02', 'YYYY-MM-DD'),
     moment('2002-03-03', 'YYYY-MM-DD'),
     moment('2003-04-04', 'YYYY-MM-DD'),

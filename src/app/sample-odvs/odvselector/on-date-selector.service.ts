@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CurvesService} from '../../curves/curves.service';
 import {combineAll, distinct, filter, map, tap} from 'rxjs/operators';
 import {BehaviorSubject, of, Subject} from 'rxjs';
-import { combineLatest} from 'rxjs';
-
-
+import {combineLatest} from 'rxjs';
 
 
 @Injectable({
@@ -22,9 +20,8 @@ export class OnDateSelectorService {
   daySelectedAction$ = this.daySelectedAction.asObservable();
 
 
-
   years$ = this.ondates$.pipe(
-    map(ondates  => {
+    map(ondates => {
       const years = ondates.map(ods => {
         return ods.year();
       });
@@ -32,7 +29,7 @@ export class OnDateSelectorService {
     })
   );
 
-  months$ = of([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+ // months$ = of([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 
   days$ = of([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
     14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -41,24 +38,34 @@ export class OnDateSelectorService {
   versions$ = of(['final']);
 
 
-  vm$ = combineLatest([this.curveService.ondates$, this.months$, this.days$, this.versions$, this.yearSelectedAction$])
+  vm$ = combineLatest(
+    [this.curveService.ondates$,  this.yearSelectedAction$])
     .pipe(
-    map(([ondates, months, days, versions, yearSelected])  => {
+      map(([ondates, yearSelected]) => {
 
-      const years = ondates.map(ods => {
-        return ods.year();
-      });
+        const years = ondates.map(ods => {
+          return ods.year();
+        });
 
-      return {
-        years: [...new Set(years)],
-        months,
-        days,
-        versions
-      };
-    })
-  );
+        const months = ondates.filter(x => x.year() === yearSelected);
 
-  constructor(private curveService: CurvesService) { }
+        let x = null;
+        if (!!months)
+          x = 2;
+
+        const days = [];
+        const versions = [];
+
+        return {
+          years: [...new Set(years)],
+          months: [...new Set(months)],
+          days, versions
+        };
+      })
+    );
+
+  constructor(private curveService: CurvesService) {
+  }
 
   selectYear(year: number) {
     this.yearSelectedAction.next(year);

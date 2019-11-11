@@ -13,22 +13,10 @@ const moment = _moment;
 export class ODVSelectorComponent {
 
   vm$ = this.onDateSelectorService.vm$;
-  //$distinctYears = this.onDateSelectorService.$distinctYears;
-
-  // $vm = this.ondates$.pipe(
-  //   map(ods => {
-  //     ods.map(od => {
-  //       od.year();
-  //     });
-  //   }),
-  //   catchError(err => {
-  //     console.log(err);
-  //     return of(null);
-  //   })
-  // );
 
   constructor(private onDateSelectorService: OnDateSelectorService) {
   }
 
+  //todo: service per component
 
 }
