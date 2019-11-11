@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CurvesService} from '../../curves/curves.service';
-import {combineAll, distinct, filter, map, mergeMap, tap} from 'rxjs/operators';
+import {combineAll, distinct, filter, map, mergeMap, startWith, tap} from 'rxjs/operators';
 import {BehaviorSubject, of, Subject} from 'rxjs';
 import {combineLatest} from 'rxjs';
 
@@ -13,41 +13,28 @@ export class OnDateSelectorService {
   private monthSelectedAction = new BehaviorSubject<number>(null);
   private daySelectedAction = new BehaviorSubject<number>(null);
 
-  yearSelectedAction$ = this.yearSelectedAction.asObservable();
-  monthSelectedAction$ = this.monthSelectedAction.asObservable();
-  daySelectedAction$ = this.daySelectedAction.asObservable();
+  private years$ = this.curveService.ondates$.pipe(
+    map(x => x.map(m => m.year()))
+  );
 
-  private version$ = combineLatest(
-    [this.yearSelectedAction$, this.monthSelectedAction$, this.daySelectedAction$]).pipe(
+  private months$ = combineLatest([this.curveService.ondates$, this.yearSelectedAction]).pipe(
+    map(([ondates, selectedYear]) => ondates.filter(od => od.year() === selectedYear).map(od => od.month()))
+    );
+
+  private days$ = combineLatest([this.curveService.ondates$, this.yearSelectedAction, this.monthSelectedAction]).pipe(
+    map(([ondates, selectedYear, selectedMonth]) =>
+      ondates.filter(od => od.year() === selectedYear && od.month() === selectedMonth).map(od => od.day()))
+  );
+
+  private version$ = combineLatest([this.yearSelectedAction, this.monthSelectedAction, this.daySelectedAction]).pipe(
     mergeMap(([yearSelected, monthSelected, daySelected]) => this.curveService.getRandomVersions(yearSelected, monthSelected, daySelected))
     );
 
-
   vm$ = combineLatest(
-    [this.curveService.ondates$, this.version$, this.yearSelectedAction$, this.monthSelectedAction$, this.daySelectedAction$])
+    [this.years$, this.months$, this.days$, this.version$])
     .pipe(
-      map(([ondates, versions, yearSelected, monthSelected, daySelected]) => {
-
-        const years = ondates.map(ods => {
-          return ods.year();
-        });
-
-        const months = ondates
-          .filter(x => x.year() === yearSelected)
-          .map(x => x.month());
-
-        const days = ondates
-          .filter(x => x.year() === yearSelected && x.month() === monthSelected)
-          .map(x => x.day());
-
-        return {
-          years: [...new Set(years)],
-          months: [...new Set(months)],
-          days: [...new Set(days)],
-          versions
-        };
-      })
-
+      map(([years, months, days, versions]) =>
+        ({ years: [...new Set(years)], months: [...new Set(months)], days: [...new Set(days)], versions}))
     );
 
   constructor(private curveService: CurvesService) {
@@ -55,10 +42,13 @@ export class OnDateSelectorService {
 
   selectYear(year: number) {
     this.yearSelectedAction.next(year);
+    this.monthSelectedAction.next(null);
+    this.daySelectedAction.next(null);
   }
 
   selectMonth(month: number) {
     this.monthSelectedAction.next(month);
+    this.daySelectedAction.next(null);
   }
 
   selectDay(day: number) {

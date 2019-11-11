@@ -51,12 +51,15 @@ export class CurvesService {
 
   constructor() { }
 
-
   getRandomVersions(year: number, month: number, day: number) {
-    const days: Array<number> = [];
-    for (let idx = 1; idx < 6; ++idx) {
-      days.push(idx);
+    if (year && month !== null && day != null) {
+      const days: Array<number> = [];
+      for (let idx = 1; idx < 6; ++idx) {
+        days.push(idx);
+      }
+      return new BehaviorSubject(days).asObservable();
+    } else {
+      return new BehaviorSubject(null).asObservable();
     }
-    return new BehaviorSubject(days).asObservable();
   }
 }

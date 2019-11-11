@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {OnDateSelectorService} from '../on-date-selector.service';
 
 @Component({
   selector: 'app-year-sel',
   templateUrl: './year-sel.component.html',
-  styleUrls: ['./year-sel.component.scss']
+  styleUrls: ['./year-sel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class YearSelComponent {
   @Input() years: Observable<Array<number>>;
